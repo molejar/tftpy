@@ -1,8 +1,17 @@
 #!/usr/bin/env python
 
-import sys, logging
+import os, sys, logging
 from optparse import OptionParser
-import tftpy
+
+try:
+    import tftpy
+except:
+    # Get tftpy package directory
+    PACKAGE_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
+    # Append tftpy package directory to the python path
+    sys.path.append(os.path.realpath(PACKAGE_PATH))
+    import tftpy
+
 
 def main():
     usage=""
@@ -48,7 +57,7 @@ def main():
     server = tftpy.TftpServer(options.root)
     try:
         server.listen(options.ip, options.port)
-    except tftpy.TftpException, err:
+    except tftpy.TftpException as err:
         sys.stderr.write("%s\n" % str(err))
         sys.exit(1)
     except KeyboardInterrupt:

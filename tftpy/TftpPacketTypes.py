@@ -424,8 +424,8 @@ class TftpPacketOACK(TftpPacket, TftpPacketWithOptions):
             log.debug("value is %s", self.options[key])
             format += "%dsx" % len(key)
             format += "%dsx" % len(self.options[key])
-            options_list.append(key)
-            options_list.append(self.options[key])
+            options_list.append(key.encode())
+            options_list.append(self.options[key].encode())
         self.buffer = struct.pack(format, self.opcode, *options_list)
         return self
 
